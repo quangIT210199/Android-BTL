@@ -171,7 +171,7 @@
                     </LinearLayout>
                     <LinearLayout
                         android:gravity="center"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="20dp"
                         android:layout_marginBottom="30dp"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
@@ -186,16 +186,6 @@
                             android:background="@drawable/buttonstyle"
                             android:text="Update"
                             android:textColor="#fff"/>
-
-                        <Button
-                            android:id="@+id/bt_cancel"
-                            android:layout_marginStart="10dp"
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:background="@drawable/buttonstyle"
-                            android:text="Cancel"
-                            android:textColor="#fff" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

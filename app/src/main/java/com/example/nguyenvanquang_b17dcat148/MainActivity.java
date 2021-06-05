@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(0);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

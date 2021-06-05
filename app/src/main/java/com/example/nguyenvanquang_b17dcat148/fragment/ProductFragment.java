@@ -90,11 +90,11 @@ public class ProductFragment extends Fragment {
         mainActivity = (MainActivity) getActivity();
 
         rcvProduct = mView.findViewById(R.id.rcv_product);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainActivity);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainActivity);
         // Set layout
-//        StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
-        rcvProduct.setLayoutManager(linearLayoutManager);
+        rcvProduct.setLayoutManager(gridLayoutManager);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 

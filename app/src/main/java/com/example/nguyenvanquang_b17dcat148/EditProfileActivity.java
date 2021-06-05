@@ -63,13 +63,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
         setProfileUser(user);
 
-        binding.btCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
         handlingFAB();
 
         binding.btSubmit.setOnClickListener(new View.OnClickListener() {

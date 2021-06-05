@@ -113,12 +113,11 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        getUser();
-//        Log.d("TAG", "onResume: " + user.getFullName());
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        getUser();
+    }
 
     private void setImageUser(String img, ImageView imgView) {
         Glide.with(mainActivity)

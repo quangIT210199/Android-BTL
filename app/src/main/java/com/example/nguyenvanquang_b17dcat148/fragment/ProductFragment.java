@@ -2,6 +2,8 @@ package com.example.nguyenvanquang_b17dcat148.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,9 +11,13 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.os.StrictMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.nguyenvanquang_b17dcat148.MainActivity;
@@ -100,8 +106,34 @@ public class ProductFragment extends Fragment {
 
         adapter = new ProductAdapter(mainActivity);
         getAllProduct();
+        // For menu
+        setHasOptionsMenu(true);
 
         return mView;
+    }
+    // CHưa dduowjc
+    @Override
+    public void onCreateOptionsMenu(@NonNull  Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.product_menu, menu);
+
+        MenuItem item=menu.findItem(R.id.mnu_search);
+        SearchView searchView=(SearchView) MenuItemCompat.getActionView(item);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+//                List<Student> list=db.getByName(newText);
+//                adapter.setStudents(list);
+//                recyclerView.setAdapter(adapter);
+                return true;
+            }
+        });
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void getAllProduct() {

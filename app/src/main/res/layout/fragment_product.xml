@@ -3,7 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="50dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.ProductFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_marginTop="50dp"
+        android:id="@+id/product_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/product_menu"
+        app:title="@string/app_name"
+        android:background="#EEEEEE"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_product"

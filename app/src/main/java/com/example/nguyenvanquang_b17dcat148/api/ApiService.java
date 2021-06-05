@@ -34,7 +34,7 @@ public interface ApiService {
             .create();
 
     OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .connectTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(40, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
             .addInterceptor(new RequestInterceptor())// This is used to add ApplicationInterceptor.

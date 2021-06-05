@@ -121,7 +121,7 @@ public class ProfileFragment extends Fragment {
 //    }
 
     private void setImageUser(String img, ImageView imgView) {
-        Glide.with(getActivity())
+        Glide.with(mainActivity)
                 .load(img)
                 .placeholder(R.drawable.default_user)
                 .circleCrop()

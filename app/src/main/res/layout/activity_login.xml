@@ -48,7 +48,7 @@
                     android:background="@drawable/edittext_style"
                     android:drawableLeft="@drawable/ic_account"
                     android:inputType="textEmailAddress"/>
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"

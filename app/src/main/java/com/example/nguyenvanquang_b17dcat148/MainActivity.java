@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.mCart: viewPager.setCurrentItem(1);
                         break;
                     case R.id.mProfile: viewPager.setCurrentItem(2);
+                        ProfileFragment profileFragment = (ProfileFragment) viewPager.getAdapter().instantiateItem(viewPager, 2);
+                        profileFragment.reloadData();
                         break;
                 }
                 return true;

@@ -116,7 +116,15 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        // Khởi tạo lại DL làm mất trải nghiệm ng dùng => tạo hàm và gọi bên ViewPager
+        // Tránh reload data khi người dùng chưa ra khỏi ứng dụng hẳn.như là cho ứng dụng thoát ra khởi background
+//        getUser();
+        Toast.makeText(getActivity(), "Reload data", Toast.LENGTH_SHORT).show();
+    }
+
+    public void reloadData() {
         getUser();
+        Toast.makeText(getActivity(), "Reload data cc", Toast.LENGTH_SHORT).show();
     }
 
     private void setImageUser(String img, ImageView imgView) {

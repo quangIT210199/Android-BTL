@@ -62,15 +62,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         setImageProduct(product.getMainImagePath(), holder.imgProduct, holder.itemView.getContext());
 //        holder.imgProduct.setImageResource(product.getImgResouce());
         holder.tvProductName.setText(product.getName());
-        holder.tvDescription.setText(product.getShortDescription());
-        holder.tvPrice.setText(product.getPrice() +"$");
+//        holder.tvDescription.setText(product.getShortDescription());
+        holder.tvPrice.setText("$" +product.getPrice());
         //Add to cart
-        holder.imgAddToCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                iClickAddToCartListener.onClickAddToCart(holder.imgAddToCart, product);
-            }
-        });
+//        holder.imgAddToCart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                iClickAddToCartListener.onClickAddToCart(holder.imgAddToCart, product);
+//            }
+//        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() { // Go to productDetail
             @Override
@@ -101,17 +101,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         // Create view in item_product.xml
         private ImageView imgProduct;
         private TextView tvProductName;
-        private TextView tvDescription;
+//        private TextView tvDescription;
         private TextView tvPrice;
         private ImageView imgAddToCart;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            imgProduct = itemView.findViewById(R.id.img_product);
-            imgAddToCart = itemView.findViewById(R.id.img_add_to_cart);
+            imgProduct = itemView.findViewById(R.id.product_image);
+//            imgAddToCart = itemView.findViewById(R.id.img_add_to_cart);
             tvProductName = itemView.findViewById(R.id.tv_product_name);
-            tvDescription = itemView.findViewById(R.id.tv_description);
+//            tvDescription = itemView.findViewById(R.id.tv_description);
             tvPrice = itemView.findViewById(R.id.tv_price);
         }
     }

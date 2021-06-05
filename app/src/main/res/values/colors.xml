@@ -36,4 +36,6 @@
     <color name="startblue">#09c6df</color>
     <color name="endblue">#0bcce6</color>
 
+    <color name="textColorPrimary">#555962</color>
+
 </resources>

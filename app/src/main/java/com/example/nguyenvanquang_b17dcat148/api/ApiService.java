@@ -79,7 +79,11 @@ public interface ApiService {
     // show cart of user
     @GET("api/carts/cart")
     Call<List<CartItem>> getAllCart();
-
-
+    // remove Cart
+    @GET("api/carts/cart/remove")
+    Call<Integer> deleteCart(@Query("pid") Integer pid);
+    // Update Cart when clicl button
+    @POST("api/carts/cart/remove")
+    Call<Integer> updateQuantity(@Query("pid") Integer pid, @Query("qty") Integer qty);
 
 }

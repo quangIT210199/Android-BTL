@@ -109,18 +109,16 @@ public class ProductFragment extends Fragment {
         // For menu
         setHasOptionsMenu(true);
 
-
-
         return mView;
     }
 
 
 
     // CHưa dduowjc
-//    @Override
-//    public void onCreateOptionsMenu(@NonNull  Menu menu, @NonNull MenuInflater inflater) {
-//        inflater.inflate(R.menu.product_menu, menu);
-//
+    @Override
+    public void onCreateOptionsMenu(@NonNull  Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.product_menu, menu);
+
 //        MenuItem item=menu.findItem(R.id.mnu_search);
 //        SearchView searchView=(SearchView) MenuItemCompat.getActionView(item);
 //        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -137,9 +135,9 @@ public class ProductFragment extends Fragment {
 //                return true;
 //            }
 //        });
-//
-//        super.onCreateOptionsMenu(menu, inflater);
-//    }
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
     private void getAllProduct() {
         ApiService.apiService.listAllProduct().enqueue(new Callback<List<Product>>() {

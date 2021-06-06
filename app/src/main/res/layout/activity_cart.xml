@@ -16,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:title="Cart"
+        android:background="#EEEEEE"
         tools:layout_editor_absoluteX="0dp" />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nguyenvanquang_b17dcat148.adapter.CartAdapter;
@@ -26,12 +27,14 @@ public class CartActivity extends AppCompatActivity {
     private List<CartItem> cartItemList = new ArrayList<>();
     private RecyclerView rcvCartItem;
     private CartAdapter cartAdapter;
+    private TextView tvTotalAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
+        tvTotalAmount = findViewById(R.id.txt_amount);
         rcvCartItem = findViewById(R.id.rv_cart);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcvCartItem.setLayoutManager(linearLayoutManager);
@@ -55,8 +58,11 @@ public class CartActivity extends AppCompatActivity {
                         System.out.println(cartItem.getProduct().getMainImagePath());
                     }
 
-                    cartAdapter = new CartAdapter(cartItemList);
+                    cartAdapter = new CartAdapter(cartItemList, CartActivity.this);
                     rcvCartItem.setAdapter(cartAdapter);
+
+                    tvTotalAmount.setText("$" + cartAdapter.totalAmount());
+
                     Toast.makeText(CartActivity.this, "Success call", Toast.LENGTH_SHORT).show();
                 }
             }

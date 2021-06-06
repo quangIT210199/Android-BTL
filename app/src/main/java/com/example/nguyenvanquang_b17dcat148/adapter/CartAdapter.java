@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,18 +15,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.example.nguyenvanquang_b17dcat148.CartActivity;
 import com.example.nguyenvanquang_b17dcat148.R;
+import com.example.nguyenvanquang_b17dcat148.api.ApiService;
 import com.example.nguyenvanquang_b17dcat148.models.CartItem;
+import com.example.nguyenvanquang_b17dcat148.util.CheckStatusCode;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
     private List<CartItem> mlist;
     private ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
+    private Context mContext;
 
-    public CartAdapter(List<CartItem> mlist) {
+    public CartAdapter(List<CartItem> mlist, Context mContext) {
         this.mlist = mlist;
+        this.mContext = mContext;
     }
 
     @NonNull
@@ -53,22 +63,79 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             public void onClick(View v) {
                 mlist.remove(holder.getAdapterPosition());
                 notifyDataSetChanged();
-            }
-        });
-
-        holder.imgReduce.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+                removeCart(cartItem.getProduct().getId());
             }
         });
 
         holder.imgIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int quantity = cartItem.getQuantity() + 1;
+                holder.tvProductAmount.setText(String.valueOf(quantity));
 
+                updateQuantity(cartItem.getProduct().getId() ,quantity);
             }
         });
+
+        holder.imgReduce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int quantity = Integer.parseInt(holder.tvProductAmount.getText().toString());
+                if (quantity > 1) {
+                    quantity = cartItem.getQuantity() - 1;
+                    holder.tvProductAmount.setText(String.valueOf(quantity));
+                    updateQuantity(cartItem.getProduct().getId() ,quantity);
+                }
+            }
+        });
+    }
+
+    private void updateQuantity(Integer pid, Integer qty) {
+        ApiService.apiService.updateQuantity(pid, qty).enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                response = CheckStatusCode.checkToken(response, mContext);
+                System.out.println("Sao vậy");
+                if (response.body() != null) {
+                    System.out.println("Sao k tăng");
+                    System.out.println(response.body().toString());
+                    Toast.makeText(mContext, "Success call", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                Toast.makeText(mContext, "Error call", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void removeCart(Integer pid) {
+        ApiService.apiService.deleteCart(pid).enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                response = CheckStatusCode.checkToken(response, mContext);
+
+                if (response.body() != null) {
+                    System.out.println(response.body().toString());
+                    Toast.makeText(mContext, "Success call", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                Toast.makeText(mContext, "Error call", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public float totalAmount() {
+        float total = 0;
+        for (CartItem cartItem : mlist) {
+            total += cartItem.getSubtotal();
+        }
+
+        return total;
     }
 
     private void setImageProduct(String img, ImageView imgView, Context mcontext) {

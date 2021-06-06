@@ -73,7 +73,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onBackPressed();
+                finish();
             }
         });
     }

@@ -71,4 +71,7 @@ dependencies {
     /*Import Libs - Ted Permission*/
     implementation 'gun0912.ted:tedbottompicker:2.0.1'
     implementation 'gun0912.ted:tedpermission:2.2.3'
+
+    // Swipe delete
+    implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
 }

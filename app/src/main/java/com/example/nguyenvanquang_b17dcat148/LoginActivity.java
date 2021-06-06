@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.nguyenvanquang_b17dcat148.api.ApiService;
 import com.example.nguyenvanquang_b17dcat148.data_local.DataLocalManager;
 import com.example.nguyenvanquang_b17dcat148.databinding.ActivityLoginBinding;
-import com.example.nguyenvanquang_b17dcat148.models.LoginRequest;
-import com.example.nguyenvanquang_b17dcat148.models.LoginResponse;
+import com.example.nguyenvanquang_b17dcat148.data.LoginRequest;
+import com.example.nguyenvanquang_b17dcat148.data.LoginResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;

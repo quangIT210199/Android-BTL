@@ -1,4 +1,4 @@
-package com.example.nguyenvanquang_b17dcat148.models;
+package com.example.nguyenvanquang_b17dcat148.data;
 
 import java.util.Set;
 

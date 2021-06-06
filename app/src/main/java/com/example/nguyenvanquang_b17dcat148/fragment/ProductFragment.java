@@ -109,32 +109,37 @@ public class ProductFragment extends Fragment {
         // For menu
         setHasOptionsMenu(true);
 
+
+
         return mView;
     }
+
+
+
     // CHưa dduowjc
-    @Override
-    public void onCreateOptionsMenu(@NonNull  Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.product_menu, menu);
-
-        MenuItem item=menu.findItem(R.id.mnu_search);
-        SearchView searchView=(SearchView) MenuItemCompat.getActionView(item);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-//                List<Student> list=db.getByName(newText);
-//                adapter.setStudents(list);
-//                recyclerView.setAdapter(adapter);
-                return true;
-            }
-        });
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+//    @Override
+//    public void onCreateOptionsMenu(@NonNull  Menu menu, @NonNull MenuInflater inflater) {
+//        inflater.inflate(R.menu.product_menu, menu);
+//
+//        MenuItem item=menu.findItem(R.id.mnu_search);
+//        SearchView searchView=(SearchView) MenuItemCompat.getActionView(item);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+////                List<Student> list=db.getByName(newText);
+////                adapter.setStudents(list);
+////                recyclerView.setAdapter(adapter);
+//                return true;
+//            }
+//        });
+//
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
 
     private void getAllProduct() {
         ApiService.apiService.listAllProduct().enqueue(new Callback<List<Product>>() {

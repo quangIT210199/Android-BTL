@@ -1,4 +1,4 @@
-package com.example.nguyenvanquang_b17dcat148.models;
+package com.example.nguyenvanquang_b17dcat148.data;
 
 public class PasswordReset {
     private String email;

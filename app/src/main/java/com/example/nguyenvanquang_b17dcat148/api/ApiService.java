@@ -1,11 +1,12 @@
 package com.example.nguyenvanquang_b17dcat148.api;
 
 
-import com.example.nguyenvanquang_b17dcat148.models.LoginRequest;
-import com.example.nguyenvanquang_b17dcat148.models.LoginResponse;
-import com.example.nguyenvanquang_b17dcat148.models.PasswordReset;
+import com.example.nguyenvanquang_b17dcat148.data.LoginRequest;
+import com.example.nguyenvanquang_b17dcat148.data.LoginResponse;
+import com.example.nguyenvanquang_b17dcat148.data.PasswordReset;
+import com.example.nguyenvanquang_b17dcat148.models.CartItem;
 import com.example.nguyenvanquang_b17dcat148.models.Product;
-import com.example.nguyenvanquang_b17dcat148.models.SignupRequest;
+import com.example.nguyenvanquang_b17dcat148.data.SignupRequest;
 import com.example.nguyenvanquang_b17dcat148.models.User;
 import com.example.nguyenvanquang_b17dcat148.util.RequestInterceptor;
 import com.google.gson.Gson;
@@ -71,6 +72,14 @@ public interface ApiService {
     @GET("api/products/products")
     Call<List<Product>> listAllProduct();
 
+    /// For Cart
+    // add product to cart
     @GET("api/carts/cart/add")
     Call<Integer> addProductToCart(@Query("pid") Integer pid, @Query("qty") Integer qty);
+    // show cart of user
+    @GET("api/carts/cart")
+    Call<List<CartItem>> getAllCart();
+
+
+
 }

@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.example.nguyenvanquang_b17dcat148.api.ApiService;
 import com.example.nguyenvanquang_b17dcat148.databinding.ActivityForgotPasswordBinding;
-import com.example.nguyenvanquang_b17dcat148.models.PasswordReset;
+import com.example.nguyenvanquang_b17dcat148.data.PasswordReset;
 
 import retrofit2.Call;
 import retrofit2.Callback;

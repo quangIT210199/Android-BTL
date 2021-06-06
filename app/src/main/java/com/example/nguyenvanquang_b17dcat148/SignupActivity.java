@@ -9,8 +9,7 @@ import android.widget.Toast;
 
 import com.example.nguyenvanquang_b17dcat148.api.ApiService;
 import com.example.nguyenvanquang_b17dcat148.databinding.ActivitySignupBinding;
-import com.example.nguyenvanquang_b17dcat148.models.SignupRequest;
-import com.example.nguyenvanquang_b17dcat148.models.User;
+import com.example.nguyenvanquang_b17dcat148.data.SignupRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;

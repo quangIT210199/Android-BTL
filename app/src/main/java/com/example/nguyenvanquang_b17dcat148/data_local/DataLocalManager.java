@@ -3,7 +3,7 @@ package com.example.nguyenvanquang_b17dcat148.data_local;
 import android.content.Context;
 
 
-import com.example.nguyenvanquang_b17dcat148.models.LoginResponse;
+import com.example.nguyenvanquang_b17dcat148.data.LoginResponse;
 import com.example.nguyenvanquang_b17dcat148.models.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

@@ -2,7 +2,7 @@ package com.example.nguyenvanquang_b17dcat148.util;
 
 
 import com.example.nguyenvanquang_b17dcat148.data_local.DataLocalManager;
-import com.example.nguyenvanquang_b17dcat148.models.LoginResponse;
+import com.example.nguyenvanquang_b17dcat148.data.LoginResponse;
 
 import java.io.IOException;
 

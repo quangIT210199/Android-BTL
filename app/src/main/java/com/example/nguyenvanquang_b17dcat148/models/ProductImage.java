@@ -4,8 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-
-public class Role implements Serializable {
+public class ProductImage implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -15,16 +14,14 @@ public class Role implements Serializable {
     @SerializedName("name")
     private String name;
 
-    public Role(String name) {
-        this.name = name;
+    private String imagePath;
+
+    public ProductImage() {
     }
 
-    public Role() {
-    }
-
-    public Role(Integer id, String name) {
-        this.id = id;
+    public ProductImage(String name, String imagePath) {
         this.name = name;
+        this.imagePath = imagePath;
     }
 
     public Integer getId() {
@@ -43,4 +40,11 @@ public class Role implements Serializable {
         this.name = name;
     }
 
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 }

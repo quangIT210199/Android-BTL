@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.example.nguyenvanquang_b17dcat148.fragment.CartFragment;
+import com.example.nguyenvanquang_b17dcat148.fragment.UserFragment;
 import com.example.nguyenvanquang_b17dcat148.fragment.ProductFragment;
 import com.example.nguyenvanquang_b17dcat148.fragment.ProfileFragment;
 
@@ -24,7 +24,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return new ProductFragment();
             case 1:
-                return new CartFragment();
+                return new UserFragment();
             case 2:
                 return new ProfileFragment();
             default:

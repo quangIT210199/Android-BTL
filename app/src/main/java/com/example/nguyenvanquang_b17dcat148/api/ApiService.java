@@ -3,6 +3,7 @@ package com.example.nguyenvanquang_b17dcat148.api;
 
 import com.example.nguyenvanquang_b17dcat148.data.LoginRequest;
 import com.example.nguyenvanquang_b17dcat148.data.LoginResponse;
+import com.example.nguyenvanquang_b17dcat148.data.PagingSearchProduct;
 import com.example.nguyenvanquang_b17dcat148.data.PasswordReset;
 import com.example.nguyenvanquang_b17dcat148.models.CartItem;
 import com.example.nguyenvanquang_b17dcat148.models.Product;
@@ -61,9 +62,22 @@ public interface ApiService {
     @POST("api/auth/create")
     Call<SignupRequest> createAccount(@Body SignupRequest signupRequest);
 
+    // update user
     @Multipart
-    @POST("/api/accounts/account/updateInfo")
+    @POST("api/accounts/account/updateInfo")
     Call<User> updateProfile(@Part("userJson") RequestBody userJson, @Part MultipartBody.Part imageFile); // @Part("username")RequestBody username // Sử dụng khi k truyền Object
+
+    //Create User
+    @Multipart
+    @POST("api/users/user/save")
+    Call<User> createUser(@Part("userJson") RequestBody userJson, @Part MultipartBody.Part imageFile);
+
+    //GET all user
+    @GET("api/users/users")
+    Call<List<User>> listAllUser();
+    //Delete user
+    @GET("api/users/user/delete")
+    Call<Integer> removeUser(@Query("id") Integer id);
 
     /// For Product
     @GET("api/products/product/page?sortField=name&sortDir=asc&categoryID")
@@ -83,7 +97,12 @@ public interface ApiService {
     @GET("api/carts/cart/remove")
     Call<Integer> deleteCart(@Query("pid") Integer pid);
     // Update Cart when clicl button
-    @POST("api/carts/cart/remove")
+    @POST("api/carts/cart/update")
     Call<Integer> updateQuantity(@Query("pid") Integer pid, @Query("qty") Integer qty);
-
+    //Check out
+    @POST("api/bills/bill")
+    Call<Integer> createBill(@Body Integer[] cartIds);
+    // Search Product
+    @GET("api/search/page")
+    Call<PagingSearchProduct> searchByName(@Query("pageNum")  Integer pageNum, @Query("keyword") String keyword);
 }

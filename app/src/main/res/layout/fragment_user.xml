@@ -4,10 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.ProductFragment">
+    android:background="@color/graylight"
+    tools:context=".fragment.UserFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar_user"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -16,7 +17,7 @@
         android:layout_height="56dp">
 
         <androidx.appcompat.widget.SearchView
-            android:id="@+id/search_view"
+            android:id="@+id/search_view_user"
             android:layout_width="357dp"
             android:layout_height="54dp"
             android:paddingRight="10dp"
@@ -24,44 +25,46 @@
             app:iconifiedByDefault="false"
             android:layout_marginEnd="20dp"
             app:queryBackground="@null"
-            app:layout_constraintRight_toRightOf="@+id/btn_cart"
+            app:layout_constraintRight_toRightOf="@+id/btn_set_user"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
         </androidx.appcompat.widget.SearchView>
 
         <ImageButton
-            android:id="@+id/btn_cart"
+            android:id="@+id/btn_set_user"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:background="@drawable/baseline_shopping_cart_24"
+            android:background="@drawable/ic_baseline_person_24"
             android:layout_marginEnd="10dp"
             android:backgroundTint="@color/white"
             android:layout_width="30dp"
             android:layout_height="30dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_User"
         android:layout_width="match_parent"
-        android:layout_height="174dp"
-        android:layout_alignTop="@+id/toolbar"
-        android:layout_marginTop="55dp">
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="504dp"
-        android:layout_alignTop="@+id/toolbar"
+        android:layout_height="657dp"
+        android:layout_below="@+id/toolbar_user"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="227dp">
+        android:layout_marginTop="18dp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_product"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:contentDescription="ADD USER"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/colorPrimary"
+        app:tint="@color/white"
+        android:src="@drawable/ic_cong" />
 </RelativeLayout>

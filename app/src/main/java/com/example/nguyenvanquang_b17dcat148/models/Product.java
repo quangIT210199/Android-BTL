@@ -3,6 +3,8 @@ package com.example.nguyenvanquang_b17dcat148.models;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -33,6 +35,9 @@ public class Product implements Serializable {
 
     @SerializedName("qrCodeImage")
     private String qrCodeImage;
+
+    @SerializedName("images")
+    private Set<ProductImage> images = new HashSet<>();
 
     private String mainImagePath;
 
@@ -68,6 +73,14 @@ public class Product implements Serializable {
         this.name = name;
         this.shortDescription = shortDescription;
         this.imgResouce = imgResouce;
+    }
+
+    public Set<ProductImage> getImages() {
+        return images;
+    }
+
+    public void setImages(Set<ProductImage> images) {
+        this.images = images;
     }
 
     public Integer getId() {

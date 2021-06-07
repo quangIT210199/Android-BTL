@@ -25,20 +25,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private List<Product> mlistProduct;
     private Activity activity;
 
-    private IClickAddToCartListener iClickAddToCartListener;
-
-    public interface IClickAddToCartListener{ // Sử dụng để gọi bên ngoài
-        void onClickAddToCart(ImageView imgAddToCart, Product product);
-    }
-
     public ProductAdapter(Activity activity){
         mlistProduct = new ArrayList<>();
         this.activity = activity;
     }
 
-    public void setData(List<Product> mlist, IClickAddToCartListener listener) {
+    public void setData(List<Product> mlist) {
         this.mlistProduct = mlist;
-        this.iClickAddToCartListener = listener;
         notifyDataSetChanged(); // should be replaced with DiffUtil lib to notifyDataChange
     }
 
@@ -64,13 +57,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.tvProductName.setText(product.getName());
 //        holder.tvDescription.setText(product.getShortDescription());
         holder.tvPrice.setText("$" +product.getPrice());
-        //Add to cart
-//        holder.imgAddToCart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                iClickAddToCartListener.onClickAddToCart(holder.imgAddToCart, product);
-//            }
-//        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() { // Go to productDetail
             @Override

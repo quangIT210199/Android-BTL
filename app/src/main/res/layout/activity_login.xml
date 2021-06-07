@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".LoginActivity">
 
     <View
@@ -48,6 +49,7 @@
                     android:background="@drawable/edittext_style"
                     android:drawableLeft="@drawable/ic_account"
                     android:inputType="textEmailAddress"/>
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
                     android:layout_width="wrap_content"

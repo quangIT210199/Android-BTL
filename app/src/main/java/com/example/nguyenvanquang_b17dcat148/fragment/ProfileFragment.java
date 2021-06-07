@@ -110,6 +110,8 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+
+
         return view;
     }
 
@@ -118,13 +120,13 @@ public class ProfileFragment extends Fragment {
         super.onResume();
         // Khởi tạo lại DL làm mất trải nghiệm ng dùng => tạo hàm và gọi bên ViewPager
         // Tránh reload data khi người dùng chưa ra khỏi ứng dụng hẳn.như là cho ứng dụng thoát ra khởi background
-//        getUser();
-        Toast.makeText(getActivity(), "Reload data", Toast.LENGTH_SHORT).show();
+        getUser();
+//        Toast.makeText(getActivity(), "Reload data", Toast.LENGTH_SHORT).show();
     }
 
     public void reloadData() {
         getUser();
-        Toast.makeText(getActivity(), "Reload data cc", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Reload data cc", Toast.LENGTH_SHORT).show();
     }
 
     private void setImageUser(String img, ImageView imgView) {
@@ -158,21 +160,5 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(mainActivity, "Error Call", Toast.LENGTH_SHORT).show();
             }
         });
-
-//        try {
-//            Response<User> response = ApiService.apiService.getUserById(id).execute();
-//            User user = response.body();
-//            System.out.println("Quang" + user.toString());
-//
-//            setImageUser(user.getPhotosImagePath(), binding.imgUser);
-//            binding.tvFullName.setText(user.getFullName());
-//            binding.tvEmail.setText(user.getEmail());
-//
-//            binding.tvPhone.setText(user.getPhoneNumber() +"");
-//            binding.tvAddress.setText(user.getAddress());
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
 }

@@ -1,9 +1,9 @@
 package com.example.nguyenvanquang_b17dcat148.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.core.view.MenuItemCompat;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,19 +16,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.nguyenvanquang_b17dcat148.CartActivity;
 import com.example.nguyenvanquang_b17dcat148.MainActivity;
 import com.example.nguyenvanquang_b17dcat148.R;
 import com.example.nguyenvanquang_b17dcat148.adapter.ProductAdapter;
 import com.example.nguyenvanquang_b17dcat148.api.ApiService;
+import com.example.nguyenvanquang_b17dcat148.data.PagingSearchProduct;
 import com.example.nguyenvanquang_b17dcat148.models.Product;
 import com.example.nguyenvanquang_b17dcat148.util.CheckStatusCode;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -86,6 +86,10 @@ public class ProductFragment extends Fragment {
     private View mView;
     private MainActivity mainActivity;
     private ProductAdapter adapter;
+
+    private SearchView searchView;
+
+    private ImageButton btnCart;
     private List<Product> mlist;
 
     @Override
@@ -96,6 +100,9 @@ public class ProductFragment extends Fragment {
         mainActivity = (MainActivity) getActivity();
 
         rcvProduct = mView.findViewById(R.id.rcv_product);
+        btnCart = mView.findViewById(R.id.btn_cart);
+        searchView = mView.findViewById(R.id.search_view);
+
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainActivity);
         // Set layout
         StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -105,39 +112,61 @@ public class ProductFragment extends Fragment {
         StrictMode.setThreadPolicy(policy);
 
         adapter = new ProductAdapter(mainActivity);
+        rcvProduct.setAdapter(adapter);
+
         getAllProduct();
-        // For menu
-        setHasOptionsMenu(true);
+
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CartActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        searchView.findViewById(R.id.search_close_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setQuery("", false);
+                searchView.clearFocus();
+
+                getAllProduct();
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchProductByName(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
 
         return mView;
     }
 
+    private void searchProductByName(String query) {
+        ApiService.apiService.searchByName(1,query).enqueue(new Callback<PagingSearchProduct>() {
+            @Override
+            public void onResponse(Call<PagingSearchProduct> call, Response<PagingSearchProduct> response) {
+                mlist = response.body().getListSearchProducts(); // OldList
+                adapter.setData(mlist);
+                rcvProduct.setAdapter(adapter);
+            }
 
-
-    // CHưa dduowjc
-    @Override
-    public void onCreateOptionsMenu(@NonNull  Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.product_menu, menu);
-
-//        MenuItem item=menu.findItem(R.id.mnu_search);
-//        SearchView searchView=(SearchView) MenuItemCompat.getActionView(item);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-////                List<Student> list=db.getByName(newText);
-////                adapter.setStudents(list);
-////                recyclerView.setAdapter(adapter);
-//                return true;
-//            }
-//        });
-
-        super.onCreateOptionsMenu(menu, inflater);
+            @Override
+            public void onFailure(Call<PagingSearchProduct> call, Throwable t) {
+                Toast.makeText(mainActivity, "Error Call", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 
     private void getAllProduct() {
         ApiService.apiService.listAllProduct().enqueue(new Callback<List<Product>>() {
@@ -147,15 +176,9 @@ public class ProductFragment extends Fragment {
                     response = CheckStatusCode.checkToken(response, mainActivity);
 
                     mlist = response.body();
-                    adapter.setData(mlist, new ProductAdapter.IClickAddToCartListener() {
-                        @Override
-                        public void onClickAddToCart(ImageView imgAddToCart, Product product) {
-
-                        }
-                    });
+                    adapter.setData(mlist);
 
                     rcvProduct.setAdapter(adapter);
-
                 }
             }
 

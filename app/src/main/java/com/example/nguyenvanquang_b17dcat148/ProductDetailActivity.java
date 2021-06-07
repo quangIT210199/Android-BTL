@@ -2,38 +2,46 @@ package com.example.nguyenvanquang_b17dcat148;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.nguyenvanquang_b17dcat148.adapter.SliderAdapter;
 import com.example.nguyenvanquang_b17dcat148.api.ApiService;
-import com.example.nguyenvanquang_b17dcat148.databinding.ActivityProductDetailBinding;
-import com.example.nguyenvanquang_b17dcat148.fragment.ProductFragment;
 import com.example.nguyenvanquang_b17dcat148.models.Product;
+import com.example.nguyenvanquang_b17dcat148.models.ProductImage;
 import com.example.nguyenvanquang_b17dcat148.util.CheckStatusCode;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProductDetailActivity extends AppCompatActivity {
+    private ImageView imgBack, imgMinus, imgPlus;
+    private TextView tvAlias, tvName, tvPrice, tvShortDescription, tvFullDescription, tvNumber;
+    private Button btnAddToCart;
+    private ViewPager viewPager;
+    private CircleIndicator circleIndicator;
+    private SliderAdapter sliderAdapter;
 
-    ActivityProductDetailBinding binding;
     private int quantity = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_product_detail);
-        binding = ActivityProductDetailBinding.inflate(getLayoutInflater());
-        View v = binding.getRoot();
-
-        setContentView(v);
+        setContentView(R.layout.activity_product_detail);
+        initUI();
 
         Intent a = getIntent();
         Product product = (Product) a.getSerializableExtra("product");
@@ -41,42 +49,76 @@ public class ProductDetailActivity extends AppCompatActivity {
             initProductDetail(product);
         }
 
-        binding.imgPlus.setOnClickListener(new View.OnClickListener() {
+        List<ProductImage> productImageList = new ArrayList<>(product.getImages());
+
+        ProductImage imageMain = new ProductImage("Main", product.getMainImagePath());
+        productImageList.add(imageMain);
+
+        for (ProductImage image : productImageList) {
+            System.out.println("Có nhé: " + image.getName());
+            System.out.println("URL nhé1: " + image.getImagePath());
+        }
+
+        sliderAdapter = new SliderAdapter(this, productImageList);
+        viewPager.setAdapter(sliderAdapter);
+
+        circleIndicator.setViewPager(viewPager);
+        sliderAdapter.registerDataSetObserver(circleIndicator.getDataSetObserver());
+
+        imgPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 quantity += 1;
-                binding.tvNumber.setText(quantity +"");
+                tvNumber.setText(quantity +"");
                 double totalPrice = quantity * product.getPrice();
-                binding.tvPrice.setText("$ " + totalPrice);
+                tvPrice.setText(totalPrice +"$");
             }
         });
 
-        binding.imgMinus.setOnClickListener(new View.OnClickListener() {
+        imgMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (quantity > 1) {
                     quantity -= 1;
-                    binding.tvNumber.setText(quantity +"");
+                    tvNumber.setText(quantity +"");
                     double totalPrice = quantity * product.getPrice();
-                    binding.tvPrice.setText("$ " + totalPrice);
+                    tvPrice.setText("$ " + totalPrice);
                 }
             }
         });
 
-        binding.btAddCart.setOnClickListener(new View.OnClickListener() {
+        btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addProduct(product);
             }
         });
 
-        binding.imgBack.setOnClickListener(new View.OnClickListener() {
+        imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
                 finish();
             }
         });
+    }
+
+    private void initUI() {
+        imgBack = findViewById(R.id.img_back);
+        imgMinus = findViewById(R.id.img_minus);
+        imgPlus = findViewById(R.id.img_plus);
+
+        tvAlias = findViewById(R.id.tv_alias);
+        tvName = findViewById(R.id.tv_name);
+        tvPrice = findViewById(R.id.tv_price);
+        tvShortDescription = findViewById(R.id.tv_shortDescript);
+        tvFullDescription = findViewById(R.id.tv_fullDescript);
+        tvNumber = findViewById(R.id.tv_number);
+
+        btnAddToCart = findViewById(R.id.bt_addCart);
+
+        viewPager = findViewById(R.id.view_pager);
+        circleIndicator = findViewById(R.id.circle_indicator);
     }
 
     private void addProduct(Product product) {
@@ -88,10 +130,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                 response = CheckStatusCode.checkToken(response, ProductDetailActivity.this);
 
                 if (response.body() != null) {
-                    System.out.println("Số lượng sản phẩm là: " + response.body().toString());
-//                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//                    fragmentTransaction.replace(R.id.product_detail, new ProductFragment()).commit();
-
                     Intent intent = new Intent(ProductDetailActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -106,18 +144,10 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void initProductDetail(Product product) {
-        setImageProduct(product.getMainImagePath(), binding.imgProduct);
-        binding.tvAlias.setText(product.getAlias());
-        binding.tvName.setText(product.getName());
-        binding.tvPrice.setText("$" + product.getPrice());
-        binding.tvShortDescript.setText(product.getShortDescription());
-        binding.tvFullDescript.setText(product.getFullDescription());
-    }
-
-    private void setImageProduct(String url, ImageView imgView) {
-        Glide.with(ProductDetailActivity.this)
-                .load(url)
-                .placeholder(R.drawable.default_user)
-                .into(imgView);
+        tvAlias.setText(product.getAlias());
+        tvName.setText(product.getName());
+        tvPrice.setText("$" + product.getPrice());
+        tvShortDescription.setText(product.getShortDescription());
+        tvFullDescription.setText(product.getFullDescription());
     }
 }

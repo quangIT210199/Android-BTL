@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CartActivity"></activity>
+        <activity android:name=".AddUserActivity"></activity>
+        <activity android:name=".EditUserActivity" />
+        <activity android:name=".CartActivity" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".SignupActivity" />

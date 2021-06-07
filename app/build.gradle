@@ -74,4 +74,6 @@ dependencies {
 
     // Swipe delete
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
+    //CircleIndicator
+    implementation 'me.relex:circleindicator:2.1.6'
 }

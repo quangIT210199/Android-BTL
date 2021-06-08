@@ -16,7 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AddUserActivity"></activity>
+        <activity android:name=".ScannerQRActivity"></activity>
+        <activity android:name=".BillActivity" />
+        <activity android:name=".MyProFileActivity" />
+        <activity android:name=".AddUserActivity" />
         <activity android:name=".EditUserActivity" />
         <activity android:name=".CartActivity" />
         <activity android:name=".EditProfileActivity" />

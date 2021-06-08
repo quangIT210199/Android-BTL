@@ -128,19 +128,19 @@
                             android:editable="false"
                             />
 
-                        <EditText
-                            android:id="@+id/edit_Password"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:layout_marginBottom="10dp"
-                            android:hint="Password"
-                            android:ems="15"
-                            android:drawablePadding="10dp"
-                            android:background="@drawable/edittext_style"
-                            android:drawableLeft="@drawable/ic_baseline_lock_24"
-                            android:paddingLeft="17dp"
-                            android:inputType="textPassword"
-                            />
+<!--                        <EditText-->
+<!--                            android:id="@+id/edit_Password"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="40dp"-->
+<!--                            android:layout_marginBottom="10dp"-->
+<!--                            android:hint="Password"-->
+<!--                            android:ems="15"-->
+<!--                            android:drawablePadding="10dp"-->
+<!--                            android:background="@drawable/edittext_style"-->
+<!--                            android:drawableLeft="@drawable/ic_baseline_lock_24"-->
+<!--                            android:paddingLeft="17dp"-->
+<!--                            android:inputType="textPassword"-->
+<!--                            />-->
                         <EditText
                             android:id="@+id/edit_Address"
                             android:layout_width="wrap_content"

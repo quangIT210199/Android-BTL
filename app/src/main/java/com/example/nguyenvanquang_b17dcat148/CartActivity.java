@@ -1,10 +1,17 @@
 package com.example.nguyenvanquang_b17dcat148;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,11 +21,13 @@ import android.widget.Toast;
 
 import com.example.nguyenvanquang_b17dcat148.adapter.CartAdapter;
 import com.example.nguyenvanquang_b17dcat148.api.ApiService;
+import com.example.nguyenvanquang_b17dcat148.data_local.MyApplication;
 import com.example.nguyenvanquang_b17dcat148.inteface.OnCartClickListener;
 import com.example.nguyenvanquang_b17dcat148.models.CartItem;
 import com.example.nguyenvanquang_b17dcat148.util.CheckStatusCode;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,11 +35,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 // Cần làm validate button check out
 public class CartActivity extends AppCompatActivity {
+    private static final int NOTIFICATION_ID = 1; // cái id khác nhau sẽ có các noti khác nhau,k bị đè lên nhau nếu gửi nhiều lần
     private RecyclerView rcvCartItem;
     private CartAdapter cartAdapter;
     private TextView tvTotalAmount;
     private OnCartClickListener onCartClickListener;
     private Button btnCheckOut;
+    private ProgressDialog mProgressDialog;
 
     private List<CartItem> cartItemList = new ArrayList<>();
 
@@ -41,8 +52,11 @@ public class CartActivity extends AppCompatActivity {
 
         tvTotalAmount = findViewById(R.id.txt_amount);
         rcvCartItem = findViewById(R.id.rv_cart);
-        ImageView imgBack = findViewById(R.id.img_back);
+        ImageView imgBack = findViewById(R.id.img_back_cart);
         btnCheckOut = findViewById(R.id.btn_checkOut);
+
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Please wait ...");
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcvCartItem.setLayoutManager(linearLayoutManager);
@@ -65,6 +79,28 @@ public class CartActivity extends AppCompatActivity {
                 checkOutCart();
             }
         });
+    }
+
+    private void sendNotification(String content) {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+
+        Notification notification = new NotificationCompat.Builder(this, MyApplication.CHANNEL_ID)
+                .setContentTitle("Haku shop bill")
+                .setContentText(content)
+                .setSmallIcon(R.drawable.outline_filter_vintage_24) // icon nhỏ
+//                .setLargeIcon(bitmap) // có thể dùng icon được
+                .setColor(getResources().getColor(R.color.colorPrimary))
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (notificationManager != null) {
+            notificationManager.notify(getNotificationId(), notification);
+        }
+    }
+
+    private int getNotificationId() {
+        return (int) new Date().getTime();
     }
 
     private void getAllCartUser(){
@@ -123,6 +159,8 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void checkOutCart() {
+        mProgressDialog.show();
+
         System.out.println("Size này: " + cartItemList.size());
         if (cartItemList.size() > 0 && cartItemList != null) {
             System.out.println("Bấm dc này");
@@ -131,6 +169,7 @@ public class CartActivity extends AppCompatActivity {
             ApiService.apiService.createBill(ids).enqueue(new Callback<Integer>() {
                 @Override
                 public void onResponse(Call<Integer> call, Response<Integer> response) {
+                    mProgressDialog.dismiss();
                     response = CheckStatusCode.checkToken(response, CartActivity.this);
 
                     if (response.body() != null) {
@@ -138,11 +177,16 @@ public class CartActivity extends AppCompatActivity {
                         cartAdapter = new CartAdapter(cartItemList, CartActivity.this);
                         rcvCartItem.setAdapter(cartAdapter);
                         tvTotalAmount.setText("$" + cartAdapter.getTotalAmount());
+                        String content = "Hóa đơn của bạn đã được thanh toán: " + cartAdapter.getTotalAmount() +"$";
+                        sendNotification(content);
                         Toast.makeText(CartActivity.this, "Thanh toán thành công!!!", Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override
                 public void onFailure(Call<Integer> call, Throwable t) {
+                    mProgressDialog.dismiss();
+                    String content = "Hóa đơn của bạn chưa được thanh toán!!! ";
+                    sendNotification(content);
                     Toast.makeText(CartActivity.this, "Error call", Toast.LENGTH_SHORT).show();
                 }
             });

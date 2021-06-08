@@ -13,9 +13,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.nguyenvanquang_b17dcat148.BillActivity;
 import com.example.nguyenvanquang_b17dcat148.EditProfileActivity;
 import com.example.nguyenvanquang_b17dcat148.LoginActivity;
 import com.example.nguyenvanquang_b17dcat148.MainActivity;
+import com.example.nguyenvanquang_b17dcat148.MyProFileActivity;
 import com.example.nguyenvanquang_b17dcat148.R;
 import com.example.nguyenvanquang_b17dcat148.api.ApiService;
 import com.example.nguyenvanquang_b17dcat148.data_local.DataLocalManager;
@@ -88,29 +90,49 @@ public class ProfileFragment extends Fragment {
         View view = binding.getRoot();
 
         mainActivity = (MainActivity) getActivity();
-        getUser();
 
-        binding.btLogout.setOnClickListener(new View.OnClickListener() {
+        binding.clEditMyProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataLocalManager.setCheckLogged(false);
-                DataLocalManager.setLoginResponse(null);
-                Intent login = new Intent(getActivity(), LoginActivity.class);
-                startActivity(login);
-                getActivity().finish();
-            }
-        });
-
-        binding.btUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
-                intent.putExtra("user", user);
+                Intent intent = new Intent(mainActivity, MyProFileActivity.class);
                 startActivity(intent);
             }
         });
 
+        // Changer Password
+        binding.clChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
+        // Your Bill
+        binding.clBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mainActivity, BillActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.clAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        binding.clSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataLocalManager.setCheckLogged(false);
+                DataLocalManager.setLoginResponse(null);
+                Intent login = new Intent(mainActivity, LoginActivity.class);
+                startActivity(login);
+
+                mainActivity.finish();
+            }
+        });
 
         return view;
     }
@@ -120,45 +142,12 @@ public class ProfileFragment extends Fragment {
         super.onResume();
         // Khởi tạo lại DL làm mất trải nghiệm ng dùng => tạo hàm và gọi bên ViewPager
         // Tránh reload data khi người dùng chưa ra khỏi ứng dụng hẳn.như là cho ứng dụng thoát ra khởi background
-        getUser();
+
 //        Toast.makeText(getActivity(), "Reload data", Toast.LENGTH_SHORT).show();
     }
 
     public void reloadData() {
-        getUser();
+
 //        Toast.makeText(getActivity(), "Reload data cc", Toast.LENGTH_SHORT).show();
-    }
-
-    private void setImageUser(String img, ImageView imgView) {
-        Glide.with(mainActivity)
-                .load(img)
-                .placeholder(R.drawable.default_user)
-                .circleCrop()
-                .into(imgView);
-    }
-
-    private void getUser() {
-        Integer id = DataLocalManager.getLoginResponse().getId();
-
-        ApiService.apiService.getUserById(id).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                response = CheckStatusCode.checkToken(response, mainActivity);
-
-                if (response.body() != null) {
-                    user = response.body();
-                    setImageUser(user.getPhotosImagePath(), binding.imgUser);
-                    binding.tvFullName.setText(user.getFullName());
-                    binding.tvEmail.setText(user.getEmail());
-                    binding.tvPhone.setText(user.getPhoneNumber() +"");
-                    binding.tvAddress.setText(user.getAddress());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(mainActivity, "Error Call", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

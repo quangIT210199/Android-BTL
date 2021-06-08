@@ -8,7 +8,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.viewpager.widget.ViewPager;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,14 +26,21 @@ import android.widget.Toast;
 import com.example.nguyenvanquang_b17dcat148.CartActivity;
 import com.example.nguyenvanquang_b17dcat148.MainActivity;
 import com.example.nguyenvanquang_b17dcat148.R;
+import com.example.nguyenvanquang_b17dcat148.ScannerQRActivity;
 import com.example.nguyenvanquang_b17dcat148.adapter.ProductAdapter;
+import com.example.nguyenvanquang_b17dcat148.adapter.SliderProductAdapter;
 import com.example.nguyenvanquang_b17dcat148.api.ApiService;
 import com.example.nguyenvanquang_b17dcat148.data.PagingSearchProduct;
+import com.example.nguyenvanquang_b17dcat148.models.PhotoHome;
 import com.example.nguyenvanquang_b17dcat148.models.Product;
 import com.example.nguyenvanquang_b17dcat148.util.CheckStatusCode;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,6 +92,8 @@ public class ProductFragment extends Fragment {
         }
     }
 
+     // using for get results
+
     private RecyclerView rcvProduct;
     private View mView;
     private MainActivity mainActivity;
@@ -90,7 +102,16 @@ public class ProductFragment extends Fragment {
     private SearchView searchView;
 
     private ImageButton btnCart;
+    private ImageButton btnScanner;
     private List<Product> mlist;
+
+    // ViewPager and Indicator
+    private ViewPager viewPagerSlide;
+    private CircleIndicator circleIndicatorHome;
+    private SliderProductAdapter sliderProductAdapter;
+    private List<PhotoHome> mlistPhoto;
+    // Create Timer for slider
+    private Timer mTimer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,7 +122,20 @@ public class ProductFragment extends Fragment {
 
         rcvProduct = mView.findViewById(R.id.rcv_product);
         btnCart = mView.findViewById(R.id.btn_cart);
+        btnScanner = mView.findViewById(R.id.scanner_qr);
         searchView = mView.findViewById(R.id.search_view);
+        viewPagerSlide = mView.findViewById(R.id.view_pager_home);
+        circleIndicatorHome = mView.findViewById(R.id.circle_indicator_home);
+
+        // Set for slide photo
+        mlistPhoto = getListPhoto();
+        sliderProductAdapter = new SliderProductAdapter(mainActivity, mlistPhoto);
+        viewPagerSlide.setAdapter(sliderProductAdapter);
+
+        circleIndicatorHome.setViewPager(viewPagerSlide);
+        sliderProductAdapter.registerDataSetObserver(circleIndicatorHome.getDataSetObserver());
+        autoSlideImage();
+        // Set for slide photo
 
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainActivity);
         // Set layout
@@ -147,8 +181,27 @@ public class ProductFragment extends Fragment {
             }
         });
 
+        btnScanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mainActivity, ScannerQRActivity.class);
+                // Using this
+                startActivity(intent);
+            }
+        });
+
 
         return mView;
+    }
+
+    private List<PhotoHome> getListPhoto() {
+        List<PhotoHome> photoHomes = new ArrayList<>();
+        photoHomes.add(new PhotoHome(R.drawable.banner1));
+        photoHomes.add(new PhotoHome(R.drawable.banner2));
+        photoHomes.add(new PhotoHome(R.drawable.banner3));
+        photoHomes.add(new PhotoHome(R.drawable.banner4));
+
+        return photoHomes;
     }
 
     private void searchProductByName(String query) {
@@ -172,9 +225,9 @@ public class ProductFragment extends Fragment {
         ApiService.apiService.listAllProduct().enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                if (response.body() != null) {
-                    response = CheckStatusCode.checkToken(response, mainActivity);
+                response = CheckStatusCode.checkToken(response, mainActivity);
 
+                if (response.body() != null) {
                     mlist = response.body();
                     adapter.setData(mlist);
 
@@ -187,5 +240,46 @@ public class ProductFragment extends Fragment {
                 Toast.makeText(mainActivity, "Error Call", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    //////
+    private void autoSlideImage() {
+        if (mlistPhoto == null || mlistPhoto.isEmpty() || viewPagerSlide == null) {
+            return;
+        }
+
+        if (mTimer == null) {
+            mTimer = new Timer();
+        }
+
+        mTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int currentItem = viewPagerSlide.getCurrentItem();
+                        int totalItem = mlistPhoto.size() - 1;
+
+                        if (currentItem < totalItem) {
+                            currentItem++;
+                            viewPagerSlide.setCurrentItem(currentItem);
+                        } else { // >= total
+                            viewPagerSlide.setCurrentItem(0);
+                        }
+                    }
+                });
+            }
+        }, 1000, 2500);
+    }
+
+    // Need cancel Thread Handler when activity dont use
+    @Override
+    public void onDestroyView() { // When view destroying need cancel Timer
+        super.onDestroyView();
+        if (mTimer != null) {
+            mTimer.cancel();
+            mTimer = null;
+        }
     }
 }

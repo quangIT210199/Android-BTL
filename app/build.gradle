@@ -68,6 +68,10 @@ dependencies {
     //Circle View
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
+    // This using for get permission and scanner QRcode with camera
+    implementation 'com.budiyev.android:code-scanner:2.1.0'
+    implementation 'com.karumi:dexter:6.2.2'
+
     /*Import Libs - Ted Permission*/
     implementation 'gun0912.ted:tedbottompicker:2.0.1'
     implementation 'gun0912.ted:tedpermission:2.2.3'

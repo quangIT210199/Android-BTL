@@ -104,7 +104,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        imgBack = findViewById(R.id.img_back);
+        imgBack = findViewById(R.id.img_back_detail);
         imgMinus = findViewById(R.id.img_minus);
         imgPlus = findViewById(R.id.img_plus);
 

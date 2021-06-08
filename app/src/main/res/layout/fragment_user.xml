@@ -7,6 +7,10 @@
     android:background="@color/graylight"
     tools:context=".fragment.UserFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbar_user"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,13 +22,16 @@
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_view_user"
-            android:layout_width="357dp"
+            android:layout_width="340dp"
             android:layout_height="54dp"
             android:paddingRight="10dp"
             app:queryHint="Search here"
             app:iconifiedByDefault="false"
-            android:layout_marginEnd="20dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginLeft="35dp"
             app:queryBackground="@null"
+            app:submitBackground="@null"
+            android:background="@drawable/shapebgsearch"
             app:layout_constraintRight_toRightOf="@+id/btn_set_user"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

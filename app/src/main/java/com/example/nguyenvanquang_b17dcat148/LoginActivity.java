@@ -1,5 +1,6 @@
 package com.example.nguyenvanquang_b17dcat148;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,9 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Please wait ...");
 
 //        if (!DataLocalManager.getFirstInstalled()) { // Lần đầu tiên cài app
 //            Toast.makeText(Login.this, "First Install App", Toast.LENGTH_SHORT).show();
@@ -67,6 +72,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginApi(LoginRequest loginRequest) {
+        mProgressDialog.show();
+
         ApiService.apiService.login(loginRequest).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
@@ -76,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                mProgressDialog.dismiss();
 
                 if (response.body() != null) {
                     DataLocalManager.setCheckLogged(true);
@@ -86,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                     finish(); // Khi finish là k back được về tk này nữa
                     Toast.makeText(LoginActivity.this, "Successs Call", Toast.LENGTH_SHORT).show();
                 } else {
+                    mProgressDialog.dismiss();
                     Toast.makeText(LoginActivity.this, "Sai thông tin tài khoản", Toast.LENGTH_SHORT).show();
                 }
             }

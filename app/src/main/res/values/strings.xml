@@ -20,4 +20,8 @@
     <string name="tab_2">Cart</string>
     <string name="tab_3">Profile</string>
 
+
+    <string name="channel_name">Haku shop bill</string>
+    <string name="channel_description">Hey friend, thank you for purchasing our products </string>
+
 </resources>

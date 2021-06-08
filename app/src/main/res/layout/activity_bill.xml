@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".CartActivity">
+    tools:context=".BillActivity">
 
     <LinearLayout
         android:id="@+id/appBarLayout"
@@ -15,12 +14,12 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_height="wrap_content">
         <RelativeLayout
-            android:id="@+id/toolbar_cart"
+            android:id="@+id/toolbar_bill"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/colorPrimary">
             <ImageView
-                android:id="@+id/img_back_cart"
+                android:id="@+id/img_back_bill"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -32,13 +31,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="CART ITEM"
+                android:text="BILL"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="20dp"
                 android:paddingLeft="10dp"
                 android:gravity="center_vertical"
-                android:layout_toEndOf="@+id/img_back_cart"
+                android:layout_toEndOf="@+id/img_back_bill"
                 />
         </RelativeLayout>
     </LinearLayout>
@@ -46,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/linearLayout2"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout2_bill"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
@@ -56,34 +55,37 @@
             android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_cart"
+                android:id="@+id/rcv_bill"
                 android:layout_width="410dp"
                 android:layout_height="582dp"/>
         </ScrollView>
     </LinearLayout>
+
     <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout2_bill"
+        android:layout_width="405dp"
+        android:layout_height="46dp"
         android:orientation="horizontal"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_checkOut"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingStart="10dp"
             android:paddingLeft="10dp"
-            android:text="Tổng tiền:"
+            android:text="Tổng tiền đã mua:"
             android:textColor="@color/textColorPrimary"
             android:textSize="18sp"
             android:textStyle="bold"
             tools:ignore="RtlSymmetry" />
 
         <TextView
-            android:id="@+id/txt_amount"
+            android:id="@+id/txt_amount_bill"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -94,14 +96,4 @@
             android:textSize="18sp" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_checkOut"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Buy"
-        android:textColor="@color/white"
-        app:backgroundTint="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

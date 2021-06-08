@@ -65,6 +65,14 @@ public class EditProfileActivity extends AppCompatActivity {
 
         handlingFAB();
 
+        binding.imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                finish();
+            }
+        });
+
         binding.btSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,20 +82,12 @@ public class EditProfileActivity extends AppCompatActivity {
                 user.setAddress(binding.editAddress.getText().toString());
                 user.setPhoneNumber(Integer.parseInt(binding.editPhone.getText().toString()));
                 user.setPassword(null);
-
-                if (binding.editPassword.getText() != null && !binding.editPassword.getText().toString().isEmpty()) {
-                    user.setPassword(binding.editPassword.getText().toString());
-                }
+//
+//                if (binding.editPassword.getText() != null && !binding.editPassword.getText().toString().isEmpty()) {
+//                    user.setPassword(binding.editPassword.getText().toString());
+//                }
 
                 updateProfile(user);
-            }
-        });
-
-        binding.imgBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-                finish();
             }
         });
     }

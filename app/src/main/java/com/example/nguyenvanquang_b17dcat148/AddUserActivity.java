@@ -190,7 +190,7 @@ public class AddUserActivity extends AppCompatActivity {
                                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(AddUserActivity.this.getContentResolver(),uri);
                                 mUri = uri;
                                 if (bitmap != null) {
-                                    binding.imageviewAccountProfile.setImageBitmap(bitmap);
+                                    binding.imageviewUserProfile.setImageBitmap(bitmap);
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();

@@ -6,6 +6,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.ProductFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbar"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,18 +21,30 @@
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_view"
-            android:layout_width="357dp"
-            android:layout_height="54dp"
-            android:paddingRight="10dp"
-            app:queryHint="Search here"
+            android:layout_width="281dp"
+            android:layout_height="49dp"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/shapebgsearch"
             app:iconifiedByDefault="false"
-            android:layout_marginEnd="20dp"
-            app:queryBackground="@null"
-            app:layout_constraintRight_toRightOf="@+id/btn_cart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </androidx.appcompat.widget.SearchView>
+            app:layout_constraintRight_toLeftOf="@+id/scanner_qr"
+            app:layout_constraintTop_toTopOf="parent"
+            app:queryBackground="@null"
+            app:queryHint="Search here"
+            app:submitBackground="@null" />
+        <ImageButton
+            android:id="@+id/scanner_qr"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/btn_cart"
+            app:layout_constraintLeft_toRightOf="@+id/search_view"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_camera"
+            />
 
         <ImageButton
             android:id="@+id/btn_cart"
@@ -36,28 +52,42 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:background="@drawable/baseline_shopping_cart_24"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="5dp"
             android:backgroundTint="@color/white"
-            android:layout_width="30dp"
+            android:layout_width="25dp"
             android:layout_height="30dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="174dp"
+        android:layout_height="200dp"
         android:layout_alignTop="@+id/toolbar"
-        android:layout_marginTop="55dp">
+        android:layout_marginTop="60dp"
+        android:background="@color/gray"
+        android:orientation="vertical">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager_home"
+            android:layout_width="match_parent"
+            android:layout_height="180dp" />
+
+        <me.relex.circleindicator.CircleIndicator
+            android:id="@+id/circle_indicator_home"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            />
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="504dp"
+        android:layout_height="466dp"
         android:layout_alignTop="@+id/toolbar"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="227dp">
+        android:layout_marginTop="265dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_product"

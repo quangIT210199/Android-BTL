@@ -5,6 +5,7 @@ import com.example.nguyenvanquang_b17dcat148.data.LoginRequest;
 import com.example.nguyenvanquang_b17dcat148.data.LoginResponse;
 import com.example.nguyenvanquang_b17dcat148.data.PagingSearchProduct;
 import com.example.nguyenvanquang_b17dcat148.data.PasswordReset;
+import com.example.nguyenvanquang_b17dcat148.models.Bill;
 import com.example.nguyenvanquang_b17dcat148.models.CartItem;
 import com.example.nguyenvanquang_b17dcat148.models.Product;
 import com.example.nguyenvanquang_b17dcat148.data.SignupRequest;
@@ -86,6 +87,10 @@ public interface ApiService {
     @GET("api/products/products")
     Call<List<Product>> listAllProduct();
 
+        //When Scanner QRcoder add produc to cart
+    @GET("api/products/product")
+    Call<Product> addToCart(@Query("id") Integer id, @Query("name") String name);
+
     /// For Cart
     // add product to cart
     @GET("api/carts/cart/add")
@@ -105,4 +110,8 @@ public interface ApiService {
     // Search Product
     @GET("api/search/page")
     Call<PagingSearchProduct> searchByName(@Query("pageNum")  Integer pageNum, @Query("keyword") String keyword);
+
+    // Get all bill for user
+    @GET("api/bills/bill")
+    Call<List<Bill>> listBill();
 }
